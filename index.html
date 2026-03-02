@@ -1,88 +1,112 @@
-<!DOCTYPE html>
+  <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>KazanTuBe</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
 
 <style>
 *{
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:'Poppins',sans-serif;
+    font-family:'Inter',sans-serif;
 }
 
 body{
-    background:linear-gradient(135deg,#0f172a,#1e293b);
+    background:#f1f5f9;
+}
+
+.app{
+    max-width:420px;
+    margin:auto;
+    min-height:100vh;
+    background:white;
     display:flex;
-    justify-content:center;
-    align-items:center;
-    height:100vh;
+    flex-direction:column;
+}
+
+/* HEADER */
+.header{
+    background:#0f172a;
     color:white;
+    padding:30px 20px;
+    border-bottom-left-radius:25px;
+    border-bottom-right-radius:25px;
+}
+
+.balance-title{
+    font-size:14px;
+    opacity:0.8;
+}
+
+.balance{
+    font-size:34px;
+    font-weight:700;
+    margin-top:5px;
+}
+
+/* CONTENT */
+.content{
+    padding:20px;
+    flex:1;
 }
 
 .card{
-    background:#1e293b;
-    width:350px;
-    padding:30px;
-    border-radius:20px;
-    box-shadow:0 20px 40px rgba(0,0,0,0.4);
-    text-align:center;
+    background:#ffffff;
+    border-radius:16px;
+    padding:18px;
+    box-shadow:0 8px 20px rgba(0,0,0,0.05);
+    margin-bottom:15px;
 }
 
-h1{
-    font-weight:600;
-    margin-bottom:20px;
+.card h3{
+    font-size:16px;
+    margin-bottom:8px;
 }
 
-input{
-    width:100%;
+.card p{
+    font-size:14px;
+    color:#64748b;
+}
+
+.card button{
+    margin-top:12px;
     padding:12px;
-    margin:8px 0;
+    width:100%;
     border:none;
     border-radius:10px;
-    background:#334155;
-    color:white;
-}
-
-input::placeholder{
-    color:#94a3b8;
-}
-
-button{
-    width:100%;
-    padding:12px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
-    background:#22c55e;
+    background:#16a34a;
     color:white;
     font-weight:600;
     cursor:pointer;
     transition:0.2s;
 }
 
-button:hover{
-    transform:scale(1.03);
+.card button:active{
+    transform:scale(0.98);
 }
 
-.switch{
-    margin-top:15px;
-    font-size:14px;
-    color:#94a3b8;
-    cursor:pointer;
+/* NAV */
+.nav{
+    display:flex;
+    justify-content:space-around;
+    padding:12px 0;
+    border-top:1px solid #eee;
+    background:white;
 }
 
-.hidden{
-    display:none;
+.nav button{
+    background:none;
+    border:none;
+    font-size:12px;
+    color:#64748b;
 }
 
-.points{
-    font-size:28px;
-    margin:15px 0;
+.nav button.active{
+    color:#0f172a;
     font-weight:600;
 }
 </style>
@@ -90,44 +114,49 @@ button:hover{
 
 <body>
 
-<div class="card" id="authBox">
-    <h1>KazanTuBe</h1>
-    <input id="email" placeholder="E-posta">
-    <input id="password" type="password" placeholder="Şifre">
-    <button onclick="login()">Giriş Yap</button>
-    <button onclick="register()">Kayıt Ol</button>
-</div>
+<div class="app">
 
-<div class="card hidden" id="dashboard">
-    <h1>Dashboard</h1>
-    <div class="points" id="points">0</div>
-    <button onclick="task()">Görev Yap (+5)</button>
-    <button onclick="logout()">Çıkış Yap</button>
+    <div class="header">
+        <div class="balance-title">Toplam Bakiye</div>
+        <div class="balance" id="balance">₺0</div>
+    </div>
+
+    <div class="content">
+
+        <div class="card">
+            <h3>🎯 Günlük Görev</h3>
+            <p>Reklam izleyerek ₺5 kazan.</p>
+            <button onclick="earn()">Görevi Yap</button>
+        </div>
+
+        <div class="card">
+            <h3>👥 Referans Kazancı</h3>
+            <p>Arkadaş davet et ₺10 kazan.</p>
+        </div>
+
+        <div class="card">
+            <h3>💳 Çekim Talebi</h3>
+            <p>Minimum ₺100 olduğunda çekim yapabilirsin.</p>
+        </div>
+
+    </div>
+
+    <div class="nav">
+        <button class="active">Ana Sayfa</button>
+        <button>Geçmiş</button>
+        <button>Profil</button>
+    </div>
+
 </div>
 
 <script>
-let currentUser = null;
-let userPoints = 0;
+let money = 0;
 
-function register(){
-    alert("Firebase bağlanınca aktif olacak.");
-}
-
-function login(){
-    document.getElementById("authBox").classList.add("hidden");
-    document.getElementById("dashboard").classList.remove("hidden");
-}
-
-function logout(){
-    document.getElementById("dashboard").classList.add("hidden");
-    document.getElementById("authBox").classList.remove("hidden");
-}
-
-function task(){
-    userPoints += 5;
-    document.getElementById("points").innerText = userPoints;
+function earn(){
+    money += 5;
+    document.getElementById("balance").innerText = "₺" + money;
 }
 </script>
 
 </body>
-</html>
+</html>  
